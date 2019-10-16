@@ -1,0 +1,160 @@
+<aura:component  controller="SaveTimesheet" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global"  description="Lightning component for lookup fields">
+    
+    <!--  <aura:registerEvent name="cloneLookupEvt" type="c:cloneLookupEvt"/>   -->
+    
+    	 <aura:attribute name="options" type="List" default="[
+    {'label': 'Requirements', 'value': 'Requirements'},
+   {'label': 'Design', 'value': 'Design'},
+    {'label': 'Implementaiion', 'value': 'Implementation'},
+   {'label': 'Testing', 'value': 'Testing'},
+   {'label': 'Training', 'value': 'Training'},
+    {'label': 'Self Learning', 'value': 'Self Learning'},
+	{'label': 'Team Building', 'value': 'Team Building'},
+	{'label': 'Process', 'value': 'Process'},
+    {'label': 'Templates', 'value': 'Templates'},
+     {'label': 'Demo', 'value': 'Demo'},
+    ]"/>
+	<aura:handler name="AddRowEvt" event="c:AddNewRowEvt" action="{!c.addNewRow}"/> 
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRowEvt" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="cloneEvt" event="c:cloneEvt" action="{!c.cloneRow}"/>
+    
+    <!-- Below handler for clone project name-->
+       
+       <aura:handler name="lookupSelect" event="c:sObjectLookupSelectEvent" action="{!c.handleLookupSelectEvent}"
+                  description="Event handler to get the selected record Id and Name from LookupItem component"/>
+    
+     <!-- above handler for clone project name-->
+    
+       <aura:attribute name="TSInstance" type="Project_Timesheet__c"/>
+        <aura:attribute name="TimeSheetList" type="Project_Timesheet__c[]"/> 
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+		<aura:attribute name="today" type="Date" default=""/>
+    
+     <aura:attribute name="isSelectAll" type="boolean" default="false"/>
+     
+    
+        <!-- All button are here save add remove cancle  -->
+        <lightning:layout	class="slds-align_absolute-center">
+        
+        <lightning:layoutItem padding="around-small">
+                <lightning:button label="Save" 
+                              class="slds-m-top--medium"
+                              variant="brand" 
+                              onclick="{!c.Save}"/>
+            </lightning:layoutItem>
+         
+            
+                  <lightning:layoutItem padding="around-small">
+                <lightning:button label="Cancel" 
+                              class="slds-m-top--medium"
+                              variant="brand" 
+                              onclick=""/>
+            </lightning:layoutItem>      
+    </lightning:layout>  
+    
+ <!--<lightning:layout > -->
+    <!--      <lightning:layoutItem size="4" padding="around-small">
+     </lightning:layoutItem> -->
+     <div class="slds-p-around--large">
+         
+        <div class="slds-page-header" style="cursor: pointer;" onclick="{!c.panelOne}">
+         
+            <section class="slds-clearfix">
+                <div class="slds-float--left ">
+                    <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+                    <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+                </div>
+                <div class="slds-m-left--large">Fill Timesheets</div>
+            </section>
+        </div>
+         
+          <div class="slds-show " aura:id="panelOne">
+    <form>
+        
+     <div class="slds-table_edit_container slds-is-relative slds-align_absolute-center slds-p-around--large">
+      <table aria-multiselectable="true" 
+             class="slds-table slds-table_bordered slds-table_edit slds-table_fixed-layout slds-table_resizable-cols" 
+             role="grid" 
+             style="width:85rem"> 
+         
+       <thead>
+           
+             <tr class="slds-line-height_reset slds-text-title--caps">
+                   
+ 	 <th class="" scope="col" style="width:1rem"> 
+  
+   <lightning:input type="checkbox"  aura:id="selectAll" value="{!v.isSelectAll}" onchange="{!c.handleSelectAll}" text=""/>
+    <span class="slds-checkbox--faux" />
+    <span class="slds-form-element__label"></span>
+   
+    </th>
+                 
+                 
+                  <th class="" scope="col" style="width:6rem">
+    				Timesheet Date
+    			</th>  
+                <th class="" scope="col" style="width:5.5rem">
+    				Project
+    			</th>  
+                 <th class="" scope="col" style="width:6rem">
+    				Timesheet Items
+    			</th>  
+                 <th class="" scope="col" style="width:6rem">
+    				Stage
+    			</th> 
+                 <th class="" scope="col" style="width:5rem">
+    				No. of Hours
+    			</th> 
+                  <th class="" scope="col" style="width:4rem">
+    				Billable
+    			</th>
+                 <th class="" scope="col" style="width:5rem">
+    				Description
+    			</th> 
+                 <th class="" scope="col" style="width:4rem">
+    				Action
+    			</th>  
+                   <th class="" scope="col" style="width:4rem">
+    				Action
+    			</th> 
+                 
+           </tr>
+	      </thead>
+
+          	<tbody>
+                 <aura:iteration items="{!v.TimeSheetList}" var="item" indexVar="index">
+                     
+                      <c:TimeSheetItem TSInstance="{!item}" rowIndex="{!index}" TimeSheetList='{!v.TimeSheetList}' aura:id="child" />
+
+            
+                   
+          </aura:iteration>
+
+          	</tbody>
+         </table>
+     </div>
+        </form>
+         </div>
+
+    </div>
+      <!-- All button are here save add remove cancle  -->
+        <lightning:layout	class="slds-align_absolute-center">
+        
+        <lightning:layoutItem padding="around-small">
+                <lightning:button label="Save" 
+                              class="slds-m-top--medium"
+                              variant="brand" 
+                              onclick="{!c.Save}"/>
+            </lightning:layoutItem>
+           
+            
+                  <lightning:layoutItem padding="around-small">
+                <lightning:button label="Cancel" 
+                              class="slds-m-top--medium"
+                              variant="brand" 
+                              onclick="{!c.goback}"/>
+            </lightning:layoutItem>      
+    </lightning:layout>  
+    <!-- </lightning:layout>-->
+</aura:component>

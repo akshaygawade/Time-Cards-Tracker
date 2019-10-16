@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="Event to remove Row" >
+    <aura:attribute name="indexVar" type="Integer" description="Use For clone row Row" />
+    <aura:attribute name="instance" type="Project_Timesheet__c"/>
+   
+</aura:event>

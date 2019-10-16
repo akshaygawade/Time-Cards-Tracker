@@ -1,0 +1,97 @@
+<aura:component controller="sObjectLookupController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" 
+                access="global"  description="Lightning component for lookup fields">
+ 
+        <aura:attribute name="TSInstance" type="Project_Timesheet__c"/>
+    <aura:attribute name="rowIndex" type="String"/>
+       <aura:attribute name="TimeSheetList" type="Project_Timesheet__c[]"/> 
+     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+		<aura:attribute name="today" type="Date" default=""/>
+    
+    
+        <aura:registerEvent name="AddRowEvt" type="c:AddNewRowEvt"/>  
+    	<aura:registerEvent name="DeleteRowEvt" type="c:DeleteRowEvt"/> 
+    	<aura:registerEvent name="cloneEvt" type="c:cloneEvt"/> 
+    	
+    	 <aura:attribute name="options" type="List" default="[
+    {'label': 'Requirements', 'value': 'Requirements'},
+   {'label': 'Design', 'value': 'Design'},
+    {'label': 'Implementaiion', 'value': 'Implementation'},
+   {'label': 'Testing', 'value': 'Testing'},
+   {'label': 'Training', 'value': 'Training'},
+    {'label': 'Self Learning', 'value': 'Self Learning'},
+	{'label': 'Team Building', 'value': 'Team Building'},
+	{'label': 'Process', 'value': 'Process'},
+    {'label': 'Templates', 'value': 'Templates'},
+     {'label': 'Demo', 'value': 'Demo'},
+    ]"/>
+    
+       <aura:handler name="lookupSelect" event="c:sObjectLookupSelectEvent" action="{!c.handleLookupSelectEvent}"
+                  description="Event handler to get the selected record Id and Name from LookupItem component"/>
+    
+    
+    <tr aria-selected="false" class="slds-hint-parent" value="{!item / 5}">
+               
+                <td>
+ 
+                    <lightning:input type="checkbox"  aura:id="checkTimesheet" value="{!c.handleChange}" text="{!item /5}"/>
+  		 <span class="slds-checkbox--faux" />
+  		 <span class="slds-form-element__label"></span>
+   
+			   </td>
+
+
+                
+                <td >
+              	
+                    <lightning:input type="date" aura:id="timesheetform" 
+                             name="timesheetdate"
+                             value="{!v.TSInstance.Timesheet_Date__c}" class="slds-is-today"/>
+                    
+                </td>
+                
+                <td name="look" value="{!v.TSInstance.Project__c}" aura:id="timesheetform" >    
+                    <c:sObjectLookup objectAPIName = "Project__c" 
+                     fieldAPIName = "Name" subHeadingFieldsAPI = "Project_Stage__c"
+                     lookupIcon = "standard:contact" placeholder = "Search Project" aura:id="grandchild"/>
+                
+                </td>
+                
+                <td>
+                    <lightning:input aura:id="timesheetform"
+                             name="TimesheetItem" value="{!v.TSInstance.Time_Sheet_Item__c}"/> 
+                </td>
+                <td>
+                
+                    <lightning:combobox name="stage"   value="{!v.TSInstance.Stage__c}" placeholder="None"
+                                    options="{! v.options}" onchange="{! c.handleChange }"/>
+                
+                </td>
+                <td>
+                
+                	     <lightning:input type="number" aura:id="timesheetform" name="NoOfHours" value="{!v.TSInstance.No_of_Hours__c}"
+                             min="1" messageWhenRangeUnderflow="Enter an amount that's at least 1."/>
+                </td>
+                <td >
+                	<lightning:input type="checkbox" aura:id="timesheetform"   name="Billable" checked="{!v.TSInstance.Billable__c}"/>
+                </td>
+                <td>
+                	  <lightning:textarea name="Description" required="true" value="{!v.TSInstance.Description__c}"/>
+                	
+                </td>
+                <td>
+                    <lightning:button label="clone" class="slds-m-top--small"  variant="success" onclick="{!c.cloneRow}"/>
+                    
+                </td>
+                <td>
+                  <lightning:buttonIcon size='large' iconName="utility:add" variant="bare" onclick="{!c.AddNewRow}" /> 
+                    
+                                 
+                    <a onclick="{!c.removeRow}">
+                   <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                   <span class="slds-assistive-text">Delete Icon</span>
+                  </a>
+                
+                </td>
+                
+             </tr>
+</aura:component>

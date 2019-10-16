@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TimeSheet</fullName>
+    <description>Akshay Gawade</description>
+    <types>
+        <members>DatatableController</members>
+        <members>SaveTimesheet</members>
+        <members>sObjectLookupController</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>AddNewRowEvt</members>
+        <members>DeleteRowEvt</members>
+        <members>ProjectTimesheets</members>
+        <members>TimeSheetItem</members>
+        <members>Timesheets</members>
+        <members>cloneEvt</members>
+        <members>cloneLookupEvt</members>
+        <members>newTimesheet</members>
+        <members>sObjectLookup</members>
+        <members>sObjectLookupItem</members>
+        <members>sObjectLookupSelectEvent</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>Time_sheets</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>Project_Timesheet__c.Billable__c</members>
+        <members>Project_Timesheet__c.Description__c</members>
+        <members>Project_Timesheet__c.No_of_Hours__c</members>
+        <members>Project_Timesheet__c.Project__c</members>
+        <members>Project_Timesheet__c.Stage__c</members>
+        <members>Project_Timesheet__c.Time_Sheet_Item__c</members>
+        <members>Project_Timesheet__c.Timesheet_Date__c</members>
+        <members>Project__c.Project_Charge_Code__c</members>
+        <members>Project__c.Project_Stage__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>Project_Timesheet__c</members>
+        <members>Project__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Project_Timesheet__c</members>
+        <members>Project__c</members>
+        <members>Time_Sheet</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>Time_sheets_UtilityBar</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>Project_Timesheet__c-Project Timesheet Layout</members>
+        <members>Project__c-Project Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>Project_Timesheet__c.All</members>
+        <members>Project__c.All</members>
+        <name>ListView</name>
+    </types>
+    <version>46.0</version>
+</Package>
